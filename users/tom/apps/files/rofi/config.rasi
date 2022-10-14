@@ -1,0 +1,6 @@
+configuration {
+	modi: "window,run,ssh,drun";
+	dpi: 180;
+}
+
+@theme "nord"
