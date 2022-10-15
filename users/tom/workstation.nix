@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./apps/common.nix ];
+  imports = [ ./apps/common.nix ./apps/desktop.nix ];
 
   home.packages = [
     pkgs.ferdi

@@ -20,6 +20,7 @@ in
         type = types.str;
         default = "5432";
       };
+    environment = mkOption { type = types.attrsOf types.str; };
   };
 
   config = mkIf cfg.enable {
@@ -28,7 +29,7 @@ in
       image = cfg.image;
       ports = [ "${cfg.port}:5432" ];
       volumes = [ "${toString cfg.dataDir}:/var/lib/postgresql/data" ];
-      environment = { POSTGRES_PASSWORD = "postgres"; };
+      environment = cfg.environment;
       extraOptions = [
         "-l io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ]);

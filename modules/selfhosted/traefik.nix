@@ -23,7 +23,7 @@ rec {
       autoStart = true;
       image = cfg.image;
       ports = [ "80:80" "443:443" "8080" ];
-      volumes = [ "${toString cfg.configDir}:/" "/var/run/docker.sock:/var/run/docker.sock:ro" ];
+      volumes = [ "${toString cfg.configDir}:/" "/var/run/podman/podman.sock:/var/run/docker.sock:ro" ];
       environment = cfg.environment;
       extraOptions = [
         "-l io.containers.autoupdate=registry"

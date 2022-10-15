@@ -34,7 +34,7 @@ in
         PUID = "1000";
         PGID = "1000";
         DATABASE_URL = "postgres://postgres:postgres@postgres/miniflux?sslmode=disable";
-        RUN_MIGRATIONS = 1;
+        RUN_MIGRATIONS = "1";
       };
       extraOptions = [
         "-l io.containers.autoupdate=registry"

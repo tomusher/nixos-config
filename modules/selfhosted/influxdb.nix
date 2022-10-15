@@ -23,6 +23,7 @@ in
         type = types.listOf types.str;
         default = [ ];
       };
+    environment = mkOption { type = types.attrsOf types.str; };
   };
 
 
@@ -32,14 +33,7 @@ in
       image = cfg.image;
       ports = [ "8086" ];
       volumes = [ "${toString cfg.configDir}:/etc/influxdb2" "${toString cfg.dataDir}:/var/lib/influxdb2" ];
-      environment = {
-        DOCKER_INFLUXDB_INIT_MODE = setup;
-        DOCKER_INFLUXDB_INIT_USERNAME = db;
-        DOCKER_INFLUXDB_INIT_PASSWORD = dbpass123pass;
-        DOCKER_INFLUXDB_INIT_ORG = home;
-        DOCKER_INFLUXDB_INIT_BUCKET = home;
-        DOCKER_INFLUXDB_INIT_ADMIN_TOKEN = home-token;
-      };
+      environment = cfg.environment;
       extraOptions = [
         "-l io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
