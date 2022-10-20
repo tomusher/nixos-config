@@ -13,7 +13,7 @@ rec {
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/adguard/adguardhome";
+        default = "docker.io/adguard/adguardhome:beta";
       };
     dnsPort = mkOption { type = types.int; };
     configDir = mkOption { type = types.path; };
@@ -30,16 +30,20 @@ rec {
     virtualisation.oci-containers.containers.adguard = {
       autoStart = true;
       image = cfg.image;
-      ports = [ "${toString cfg.dnsPort}:53" "67:67/udp" "3000:3000/tcp" "853:853/tcp" "80" ];
+      ports = [
+        "${toString cfg.dnsPort}:53/tcp"
+        "${toString cfg.dnsPort}:53/udp"
+        "67:67/udp" "3000:3000/tcp" "853:853/tcp" "80"
+      ];
       volumes = [ "${toString cfg.configDir}:/opt/adguardhome/conf" "${toString cfg.dataDir}:/opt/adguardhome/work" ];
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {
           appName = "adguard";
           host = cfg.traefikHost;
-          port = 8080;
+          port = 80;
         };
     };
   };

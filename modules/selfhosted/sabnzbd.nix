@@ -30,17 +30,17 @@ rec {
     virtualisation.oci-containers.containers.sabnzbd = {
       autoStart = true;
       image = cfg.image;
-      ports = [ "8090" ];
+      ports = [ "8080" ];
       volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.downloadsDir}:/downloads" "${toString cfg.incompleteDownloadsDir}:/incomplete-downloads" ];
       environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {
           appName = "sabnzbd";
           host = cfg.traefikHost;
-          port = 8090;
+          port = 8080;
         };
     };
   };

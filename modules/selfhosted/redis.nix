@@ -27,7 +27,7 @@ in
       image = cfg.image;
       ports = [ "${cfg.port}:6379" ];
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ]);
     };
   };

@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/blakeblackshear/frigate:0.10.1-amd64";
+        default = "docker.io/blakeblackshear/frigate:0.11.1";
       };
     configDir = mkOption { type = types.path; };
     mediaDir = mkOption { type = types.path; };
@@ -31,12 +31,12 @@ in
       autoStart = true;
       image = cfg.image;
       ports = [ "5000" "1935" ];
-      volumes = [ "${toString cfg.configDir}:/config/config.yml:ro" "${toString cfg.mediaDir}:/media/frigate" "/etc/localtime:/etc/localtime" ];
+      volumes = [ "${toString cfg.configDir}/config.yml:/config/config.yml:ro" "${toString cfg.mediaDir}:/media/frigate" "/etc/localtime:/etc/localtime" ];
       extraOptions = [
         "--privileged=true"
         "--device=/dev/bus/usb:/dev/bus/usb"
         "--device=/dev/dri/renderD128"
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

@@ -37,7 +37,7 @@ in
         RUN_MIGRATIONS = "1";
       };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

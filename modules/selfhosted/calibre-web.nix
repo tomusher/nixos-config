@@ -16,6 +16,7 @@ in
         default = "lscr.io/linuxserver/calibre-web";
       };
     configDir = mkOption { type = types.path; };
+    libraryDir = mkOption { type = types.path; };
     traefikHost = mkOption { type = types.str; };
     labels = mkOption
       {
@@ -30,16 +31,16 @@ in
       autoStart = true;
       image = cfg.image;
       ports = [ "8083" ];
-      volumes = [ "${toString cfg.configDir}:/config" ];
+      volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.libraryDir}:/books" ];
       environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {
           appName = "calibre-web";
           host = cfg.traefikHost;
-          port = 8080;
+          port = 8083;
         };
     };
   };

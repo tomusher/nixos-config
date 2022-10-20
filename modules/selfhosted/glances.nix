@@ -15,12 +15,12 @@ in
         type = types.str;
         default = "docker.io/nicolargo/glances";
       };
-    configDir = mkOption { type = types.path; };
     labels = mkOption
       {
         type = types.listOf types.str;
         default = [ ];
       };
+    traefikHost = mkOption { type = types.str; };
   };
 
 
@@ -29,13 +29,12 @@ in
       autoStart = true;
       image = cfg.image;
       ports = [ "61208" ];
-      volumes = [ "${toString cfg.configDir}:/etc/glances" ];
       environment = {
         GLANCES_OPT = "-w -t 15";
       };
       extraOptions = [
         "--network=host"
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

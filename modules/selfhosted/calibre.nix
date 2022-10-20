@@ -34,7 +34,8 @@ in
       volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.libraryDir}:/books" ];
       environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
+        "--security-opt seccomp=unconfined"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

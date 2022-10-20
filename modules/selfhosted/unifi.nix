@@ -27,7 +27,7 @@ rec {
       volumes = [ "${toString cfg.configDir}:/config" ];
       environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

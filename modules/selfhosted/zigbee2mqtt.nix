@@ -27,7 +27,7 @@ rec {
       volumes = [ "${toString cfg.configDir}:/app/data" ];
       extraOptions = [
         "--device=/dev/ttyUSB0:/dev/ttyUSB0"
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

@@ -11,6 +11,7 @@ in {
       podman = {
         enable = true;
         dockerCompat = true;
+        dockerSocket.enable = true;
         defaultNetwork.dnsname.enable = true;
       };
       oci-containers.backend = "podman";
@@ -19,13 +20,13 @@ in {
     };
   selfhosted.postgres = {
     enable = true;
-    dataDir = /srv/data/postgres;
+    dataDir = /srv/data/postgres/14/data;
     environment = {
       POSTGRES_PASSWORD = "postgres";
     };
   };
   selfhosted.influxdb = {
-    enable = true;
+    enable = false;
     dataDir = /srv/data/influxdb;
     configDir = /srv/config/influxdb;
     environment = {
@@ -84,12 +85,13 @@ in {
   selfhosted.calibre = {
     enable = true;
     configDir = /srv/config/calibre;
-    libraryDir = /tmp/library;
+    libraryDir = /mnt/big/eBooks;
     traefikHost = "calibre.home.tomusher.com";
   };
   selfhosted.calibre-web = {
     enable = true;
     configDir = /srv/config/calibre-web;
+    libraryDir = /mnt/big/eBooks;
     traefikHost = "calibre-web.home.tomusher.com";
   };
   selfhosted.changedetection = {
@@ -100,8 +102,8 @@ in {
   selfhosted.sabnzbd = {
     enable = true;
     configDir = /srv/config/sabnzbd;
-    downloadsDir = /tmp/downloads;
-    incompleteDownloadsDir = /tmp/incomplete-downloads;
+    downloadsDir = /mnt/big/downloads;
+    incompleteDownloadsDir = /mnt/big/incomplete-downloads;
     traefikHost = "sabnzbd.home.tomusher.com";
   };
   selfhosted.bazarr = {
@@ -113,16 +115,31 @@ in {
     enable = true;
     configDir = /srv/config/sonarr;
     traefikHost = "sonarr.home.tomusher.com";
+    mounts = [
+      "/mnt/disk1/Videos/Episodic:/tv"
+      "/mnt/big/Videos/Episodic:/tv2"
+      "/mnt/big/downloads:/downloads"
+    ];
   };
   selfhosted.radarr = {
     enable = true;
     configDir = /srv/config/radarr;
     traefikHost = "radarr.home.tomusher.com";
+    mounts = [
+      "/mnt/big/downloads:/downloads"
+      "/mnt/disk2/Videos/Films:/movies"
+      "/mnt/big/Videos/Films:/movies2"
+    ];
+  };
+  selfhosted.prowlarr = {
+    enable = true;
+    configDir = /srv/config/prowlarr;
+    traefikHost = "prowlarr.home.tomusher.com";
   };
   selfhosted.frigate = {
     enable = true;
     configDir = /srv/config/frigate;
-    mediaDir = /tmp/frigate;
+    mediaDir = /mnt/big/shared/frigate;
     traefikHost = "frigate.home.tomusher.com";
   };
   selfhosted.paperless = {
@@ -130,5 +147,33 @@ in {
     configDir = /srv/config/paperless;
     dataDir = /tmp/paperless;
     traefikHost = "paperless.home.tomusher.com";
+  };
+  selfhosted.glances = {
+    enable = true;
+    traefikHost = "glances.home.tomusher.com";
+  };
+  selfhosted.unifi = {
+    enable = true;
+    configDir = /srv/config/unifi;
+    traefikHost = "glances.home.tomusher.com";
+  };
+  selfhosted.fava = {
+    enable = true;
+    configDir = /srv/config/money;
+    traefikHost = "fava.home.tomusher.com";
+  };
+  selfhosted.plex = {
+    enable = true;
+    traefikHost = "plex.home.tomusher.com";
+    configDir = /srv/config/plex;
+    extraMounts = [
+      "/mnt/disk1/Videos/Episodic:/data/tvshows"
+      "/mnt/disk2/Videos/Episodic:/data/tvshows2"
+      "/mnt/disk1/Videos/Films:/data/movies"
+      "/mnt/disk2/Videos/Films:/data/movies2"
+      "/mnt/big/Videos/Episodic:/data/tvshows3"
+      "/mnt/big/Videos/Films:/data/movies3"
+      "/mnt/big/music:/data/music"
+    ];
   };
 }

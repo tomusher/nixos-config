@@ -23,10 +23,15 @@ rec {
       autoStart = true;
       image = cfg.image;
       ports = [ "80:80" "443:443" "8080" ];
-      volumes = [ "${toString cfg.configDir}:/" "/var/run/podman/podman.sock:/var/run/docker.sock:ro" ];
+      volumes = [ 
+        "${toString cfg.configDir}/acme.json:/acme.json"
+        "${toString cfg.configDir}/traefik.toml:/traefik.toml"
+        "${toString cfg.configDir}/dynamic.toml:/dynamic.toml"
+        "/var/run/podman/podman.sock:/var/run/docker.sock:ro"
+      ];
       environment = cfg.environment;
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ];
     };
   };

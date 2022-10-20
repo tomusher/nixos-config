@@ -9,7 +9,7 @@ in
 {
   options.selfhosted.plex = {
     enable = mkOption { type = types.bool; default = false; };
-    network = mkOption { type = types.str; default = ""; };
+    network = mkOption { type = types.str; default = "host"; };
     image = mkOption
       {
         type = types.str;
@@ -18,7 +18,7 @@ in
     traefikHost = mkOption { type = types.str; };
     configDir = mkOption { type = types.path; };
     extraMounts = mkOption {
-      type = types.listof types.str;
+      type = types.listOf types.str;
       default = [ ];
     };
     labels = mkOption
@@ -33,7 +33,7 @@ in
     virtualisation.oci-containers.containers.plex = {
       autoStart = true;
       image = cfg.image;
-      volumes = [ "${toString cfg.configDir}:/config" ] ++ extraMounts;
+      volumes = [ "${toString cfg.configDir}:/config" ] ++ cfg.extraMounts;
       environment = {
         TZ = "Europe/London";
         PUID = "1000";
@@ -42,14 +42,8 @@ in
       };
       extraOptions = [
         "--device=/dev/dri"
-        "-l io.containers.autoupdate=registry"
-      ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
-      ++ utils.traefikLabels
-        {
-          appName = "plex";
-          host = cfg.traefikHost;
-          port = 8000;
-        };
+        "-l=io.containers.autoupdate=registry"
+      ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ]);
     };
   };
 }

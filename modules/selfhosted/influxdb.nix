@@ -35,7 +35,7 @@ in
       volumes = [ "${toString cfg.configDir}:/etc/influxdb2" "${toString cfg.dataDir}:/var/lib/influxdb2" ];
       environment = cfg.environment;
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

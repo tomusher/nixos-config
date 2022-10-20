@@ -25,5 +25,21 @@
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
+
+  fileSystems."/mnt/disk1" = {
+    device = "192.168.0.104:/srv/nfs/disk1";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" ];
+  };
+  fileSystems."/mnt/disk2" = {
+    device = "192.168.0.104:/srv/nfs/disk2";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" ];
+  };
+  fileSystems."/mnt/big" = {
+    device = "192.168.0.120:/export/big";
+    fsType = "nfs";
+    options = [ "x-systemd.automount" "noauto" ];
+  };
 }
 

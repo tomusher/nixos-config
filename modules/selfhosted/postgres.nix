@@ -12,7 +12,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/postgres:12";
+        default = "docker.io/postgres:14";
       };
     dataDir = mkOption { type = types.path; };
     port = mkOption
@@ -31,7 +31,7 @@ in
       volumes = [ "${toString cfg.dataDir}:/var/lib/postgresql/data" ];
       environment = cfg.environment;
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ]);
     };
   };

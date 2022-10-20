@@ -33,7 +33,7 @@ rec {
       volumes = [ "${toString cfg.configDir}:/conf" ];
       environment = { TZ = "Europe/London"; };
       extraOptions = [
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {

@@ -30,7 +30,7 @@ in
       extraOptions = [
         "--network=host"
         "--privileged=true"
-        "-l io.containers.autoupdate=registry"
+        "-l=io.containers.autoupdate=registry"
       ] ++ forEach cfg.labels (l: "-l $(l)");
     };
   };
