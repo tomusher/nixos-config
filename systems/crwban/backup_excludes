@@ -1,0 +1,46 @@
+downloads
+*.log
+*.log.*
+incomplete-downloads
+pihole/pihole-FTL.db
+plex/Library/Application Support/Plex Media Server/Media
+plex/Library/Application Support/Plex Media Server/Metadata
+plex/Library/Application Support/Plex Media Server/Logs
+plex/Library/Application Support/Plex Media Server/Cache
+plex/Library/Application Support/Plex Media Server/Plug-in\ Support
+plex/Library/Application Support/Plex Media Server/Plug-ins
+plex/Library/Application Support/Plex Media Server/Crash\ Reports
+homeassistant/home-assistant_v2.db
+lazylibrarian/cache
+motioneye/media
+syncthing/index*
+hydra/logs
+hydra/backup
+radarr/Backups
+radarr/MediaCover
+radarr/logs
+radarr/logs.db
+radarr/logs.db*
+radarr/UpdateLogs
+sonarr/MediaCover
+sonarr/Backups
+sonarr/logs
+sonarr/logs.db
+sonarr/logs.db*
+sonarr/UpdateLogs
+prowlarr/logs
+shared/motion
+nodered/node_modules
+data/adguard/work
+influxdb
+data/mosquitto/data
+data/mosquitto/log
+postgres
+unifi/data/db
+bazarr/log
+mylarr/mylarr/cache
+zigbee2mqtt/log
+ersatzvtv/logs.sqlite3
+changedetection/
+.mypy_cache
+!changedetection/url-watches.json

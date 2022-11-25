@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./selfhosted.nix
+    ./backup.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -29,17 +30,17 @@
   fileSystems."/mnt/disk1" = {
     device = "192.168.0.104:/srv/nfs/disk1";
     fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" ];
+    options = [ "x-systemd.automount" "noauto" "hard" "intr" "timeo=30" ];
   };
   fileSystems."/mnt/disk2" = {
     device = "192.168.0.104:/srv/nfs/disk2";
     fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" ];
+    options = [ "x-systemd.automount" "noauto" "hard" "intr" "timeo=30" ];
   };
   fileSystems."/mnt/big" = {
     device = "192.168.0.120:/export/big";
     fsType = "nfs";
-    options = [ "x-systemd.automount" "noauto" ];
+    options = [ "x-systemd.automount" "noauto" "hard" "intr" "timeo=30" ];
   };
 }
 

@@ -31,7 +31,7 @@ in
       autoStart = true;
       image = cfg.image;
       ports = [ "5000" "1935" ];
-      volumes = [ "${toString cfg.configDir}/config.yml:/config/config.yml:ro" "${toString cfg.mediaDir}:/media/frigate" "/etc/localtime:/etc/localtime" ];
+      volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.mediaDir}:/media/frigate" "/etc/localtime:/etc/localtime" ];
       extraOptions = [
         "--privileged=true"
         "--device=/dev/bus/usb:/dev/bus/usb"

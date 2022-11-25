@@ -36,7 +36,7 @@ in
         TZ = "Europe/London";
         PUID = "1000";
         PGID = "1000";
-        PAPERLESS_URL = cfg.traefikHost;
+        PAPERLESS_URL = "https://" + cfg.traefikHost;
       };
       extraOptions = [
         "-l=io.containers.autoupdate=registry"

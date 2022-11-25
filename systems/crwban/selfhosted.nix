@@ -145,7 +145,7 @@ in {
   selfhosted.paperless = {
     enable = true;
     configDir = /srv/config/paperless;
-    dataDir = /tmp/paperless;
+    dataDir = /srv/data/paperless;
     traefikHost = "paperless.home.tomusher.com";
   };
   selfhosted.glances = {
@@ -155,7 +155,7 @@ in {
   selfhosted.unifi = {
     enable = true;
     configDir = /srv/config/unifi;
-    traefikHost = "glances.home.tomusher.com";
+    traefikHost = "unifi.home.tomusher.com";
   };
   selfhosted.fava = {
     enable = true;

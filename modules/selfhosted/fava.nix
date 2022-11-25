@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "fava";
+        default = "localhost/fava";
       };
     configDir = mkOption { type = types.path; };
     labels = mkOption
