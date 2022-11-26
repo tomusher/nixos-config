@@ -1,0 +1,11 @@
+--- a/internal/lock/lock.go
++++ b/internal/lock/lock.go
+@@ -29,7 +29,7 @@ func getLock() *viper.Viper {
+ 				colors.Error.Println("cannot lock before reading config location")
+ 				os.Exit(1)
+ 			}
+-			file = path.Join(path.Dir(p), ".autorestic.lock.yml")
++			file = path.Join("/tmp", ".autorestic.lock.yml")
+ 			if !flags.CRON_LEAN {
+ 				colors.Faint.Println("Using lock:\t", file)
+ 			}
