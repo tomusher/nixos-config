@@ -54,6 +54,10 @@ in {
     enable = true;
     configDir = /srv/config/homeassistant;
   };
+  selfhosted.roomassistant = {
+    enable = true;
+    configDir = /srv/config/roomassistant;
+  };
   selfhosted.appdaemon = {
     enable = true;
     configDir = /srv/config/appdaemon;
@@ -161,6 +165,11 @@ in {
     enable = true;
     configDir = /srv/config/money;
     traefikHost = "fava.home.tomusher.com";
+  };
+  selfhosted.silverbullet = {
+    enable = true;
+    dataDir = /srv/data/silverbullet;
+    traefikHost = "notes.home.tomusher.com";
   };
   selfhosted.plex = {
     enable = true;
