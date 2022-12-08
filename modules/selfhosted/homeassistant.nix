@@ -33,5 +33,7 @@ in
         "-l=io.containers.autoupdate=registry"
       ] ++ forEach cfg.labels (l: "-l $(l)");
     };
+    systemd.services.podman-homeassistant.serviceConfig.after = [ "network-online.target" ];
+    systemd.services.podman-homeassistant.serviceConfig.wants = [ "network-online.target" ];
   };
 }
