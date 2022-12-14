@@ -85,15 +85,6 @@
   };
 
   nixpkgs.overlays = lib.singleton (self: super: {
-      # Fix for segfault during config validation:
-      # https://github.com/i3/i3/pull/5173
-      i3 = super.i3.overrideAttrs (drv: {
-        patches = lib.singleton (self.fetchpatch {
-          url = "https://github.com/i3/i3/commit/"
-              + "d0ef4000e9f49d2ef33d6014a4b61339bb787363.patch";
-          hash = "sha256-Njdl/XnBypxg2Ytk/phxVfYhdnJHgDshLo9pTYk5o2I";
-        });
-      });
     }); 
 
 }
