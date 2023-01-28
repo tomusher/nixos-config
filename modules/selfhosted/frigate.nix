@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/blakeblackshear/frigate:0.11.1";
+        default = "ghcr.io/blakeblackshear/frigate:0.12.0-beta5";
       };
     configDir = mkOption { type = types.path; };
     mediaDir = mkOption { type = types.path; };
