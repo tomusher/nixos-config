@@ -6,6 +6,7 @@ let
       inputs = config.inputs;
       currentSystem = config.system;
       sshPubKey = config.sshPubKey;
+      hostname = config.hostname;
     };
 
     modules = [

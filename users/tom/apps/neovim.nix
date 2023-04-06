@@ -40,6 +40,7 @@
       set tabstop=4
       set softtabstop=4
 
+      set t_Co=256
       colorscheme nord
 
       lua <<EOF

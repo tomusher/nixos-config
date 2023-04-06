@@ -1,12 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [ ./apps/common.nix ./apps/linux-desktop.nix ];
+  imports = [ ./apps/common.nix ./apps/wayland-desktop.nix ];
 
   home.packages = [
-    pkgs.ferdi
     pkgs.zoom-us
-    pkgs.v4l2loopback
     pkgs.plex-media-player
     pkgs.obs-studio
     pkgs.newsboat
@@ -14,6 +12,10 @@
     pkgs.brave
     pkgs.flameshot
     pkgs.discord
+    pkgs.slack
     pkgs.texlive.combined.scheme-basic
+    pkgs.pavucontrol
+    pkgs._1password
+    pkgs._1password-gui
   ];
 }

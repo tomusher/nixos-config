@@ -1,51 +1,53 @@
-{ config, pkgs, currentSystem, home-manager, ... }:
+{ config, pkgs, currentSystem, inputs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
+    inputs.hyprland.nixosModules.default
   ];
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  # Enable swap on luks
+  boot.initrd.luks.devices."luks-844fcb12-b593-4a25-9581-a379838c9cc3".device = "/dev/disk/by-uuid/844fcb12-b593-4a25-9581-a379838c9cc3";
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
 
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.devenv
+    slurp
+    grim
+#    inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
+  ];
+
+  programs.hyprland.enable = true;
+
+  virtualisation.docker.enable = true;
+
   time.timeZone = "Europe/London";
 
-  networking.useDHCP = false;
-  networking.interfaces.ens160.useDHCP = true;
+  networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
 
   i18n.defaultLocale = "en_GB.UTF-8";
   console = {
     keyMap = "uk";
   };
   security.sudo.wheelNeedsPassword = false;
-
-  services.xserver = {
-    enable = true;
-    layout = "gb";
-    dpi = 220;
-
-    desktopManager = {
-      xterm.enable = false;
-      wallpaper.mode = "scale";
-    };
-
-    displayManager = {
-      defaultSession = "none+i3";
-      lightdm.enable = true;
-
-      sessionCommands = "${pkgs.xorg.xset}/bin/xset r rate 200 40";
-    };
-
-    resolutions = [{ x = 3024; y = 1964; }];
-
-    windowManager = {
-      i3.enable = true;
-    };
-  };
 
   users.mutableUsers = false;
 
@@ -55,5 +57,9 @@
   };
 
   services.openssh.enable = true;
+
+  services.pipewire.enable = true;
+  services.pipewire.pulse.enable = true;
+  services.pipewire.wireplumber.enable = true;
 }
 

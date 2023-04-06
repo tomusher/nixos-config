@@ -9,6 +9,7 @@
     pkgs._1password
     pkgs.i3status-rust
     pkgs.firefox
+    pkgs.pavucontrol
   ];
 
   xsession.enable = true;

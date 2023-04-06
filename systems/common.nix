@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hostname, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -20,6 +20,14 @@
     git
     fira-code
     nnn
+  ];
+
+  environment.variables.NIXOS_OZONE_WL = "1";
+
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-emoji
+    fira-code
   ];
 
   nix = {

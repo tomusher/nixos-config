@@ -19,8 +19,8 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    devenv.url = "github:cachix/devenv/latest";
-
+    devenv.url = github:cachix/devenv/latest;
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = inputs@{ self, nixpkgs, ... }:
@@ -30,8 +30,14 @@
     {
       channelsConfig.allowUnfree = true;
 
-      nixosConfigurations.crwban = mkSystem.nixos {
-        inherit inputs;
+      nixosConfigurations.afanc = mkSystem {
+        inherit inputs nixpkgs;
+        hostname = "afanc";
+        system = "x86_64-linux";
+      };
+
+      nixosConfigurations.crwban = mkSystem {
+        inherit inputs nixpkgs;
         hostname = "crwban";
         system = "x86_64-linux";
       };
