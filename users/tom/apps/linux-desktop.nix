@@ -4,11 +4,6 @@
     enable = true;
   };
 
-  home.sessionVariables = {
-    TERMINAL = "kitty";
-    EDITOR = "nvim";
-  };
-
   home.packages = [
     pkgs.zathura
     pkgs._1password
@@ -31,36 +26,11 @@
     enableZshIntegration = true;
   };
 
-  programs.kitty = {
-    enable = true;
-    extraConfig = builtins.readFile ./files/kitty/kitty.conf;
-    theme = "Nord";
-  };
-  xdg.configFile."kitty/open-actions.conf".text = builtins.readFile ./files/kitty/open-actions.conf;
-
   programs.rofi = {
     enable = true;
   };
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./files/rofi/config.rasi;
   xdg.configFile."rofi/themes/nord.rasi".text = builtins.readFile ./files/rofi/themes/nord.rasi;
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.nnn = {
-    enable = true;
-    plugins.mappings = {
-      o = "fzopen";
-      v = "imgview";
-      t = "imgthumb";
-      z = "autojump";
-      p = "preview-tui";
-      P = "preview-tabbed";
-      n = "nuke";
-    };
-  };
 
   services.dunst = {
     enable = true;

@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../common.nix
     inputs.home-manager.darwinModule
   ];
 
@@ -17,9 +16,17 @@
 
   programs.zsh.enable = true;
 
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
   home-manager.users.tom = { pkgs, ... }: {
     home.packages = [
       inputs.devenv.packages.${pkgs.stdenv.hostPlatform.system}.devenv
+      pkgs.zoom-us
+      pkgs.plex-media-player
+      pkgs.discord
     ];
     imports = [ ../../users/tom/apps/common.nix ];
   };

@@ -4,7 +4,7 @@ let
   secrets = import ../../secrets/secrets.nix;
 in {
   imports = [
-    ../../modules/email
+    ../../../modules/email
   ];
 
   usher.email = {

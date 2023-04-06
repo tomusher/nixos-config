@@ -1,5 +1,5 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [ ./apps/common.nix ./apps/desktop.nix ];
+  imports = [ ./apps/common.nix ./apps/linux-desktop.nix ];
 }

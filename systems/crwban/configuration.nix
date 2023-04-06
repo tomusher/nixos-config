@@ -18,7 +18,7 @@
       inherit inputs;
     };
     users.tom = {
-      imports = [ ../../users/tom/remote.nix ../../users/tom/email.nix ];
+      imports = [ ../../users/tom/remote.nix ../../users/tom/apps/email.nix ];
     };
   };
 
