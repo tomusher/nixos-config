@@ -1,32 +1,23 @@
-config@{ nixpkgs, inputs, ... }:
+let
+  mkConfig = config: type: {
+    system = config.system;
 
-with builtins;
-nixpkgs.lib.nixosSystem {
-  system = config.system;
+    specialArgs = {
+      inputs = config.inputs;
+      currentSystem = config.system;
+      sshPubKey = config.sshPubKey;
+    };
 
-  specialArgs = {
-    inherit inputs;
-    currentSystem = config.system;
-    sshPubKey = config.sshPubKey;
+    modules = [
+      ../systems/common.nix
+      ../systems/${type}.nix
+      ../systems/${config.hostname}/configuration.nix
+    ];
   };
+in {
+  nixos = config@{ inputs, ... }:
+    inputs.nixpkgs.lib.nixosSystem (mkConfig config "nixos");
 
-  modules = [
-    ../systems/common.nix
-    ../systems/${config.hostname}/configuration.nix
-    inputs.home-manager.nixosModule
-    ({
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-        users = builtins.mapAttrs
-          (name: value: {
-            imports = value.home-manager;
-          })
-          config.users;
-      };
-    })
-  ] ++ (map (key: getAttr "nixos" (getAttr key config.users)) (attrNames config.users));
+  darwin = config@{ inputs, ... }:
+    inputs.darwin.lib.darwinSystem (mkConfig config "darwin");
 }

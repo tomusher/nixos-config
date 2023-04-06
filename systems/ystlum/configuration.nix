@@ -4,7 +4,20 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/vmware-guest.nix
+    ../../users/tom/nixos-user.nix
+    inputs.home-manager.nixosModule
   ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+    users.tom = {
+      imports = [../../users/tom/guest-vm.nix]
+    }
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

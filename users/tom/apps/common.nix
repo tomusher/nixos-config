@@ -8,9 +8,6 @@
   home.stateVersion = "22.05";
 
   home.packages = [
-    pkgs.ripgrep
-    pkgs.fd
-    pkgs.jq
   ];
 
   programs.git = {

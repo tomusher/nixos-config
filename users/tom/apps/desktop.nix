@@ -1,9 +1,5 @@
 { config, pkgs, inputs, ... }:
 {
-  imports = [
-    inputs.nixos-vscode-server.nixosModules.home-manager.nixos-vscode-server
-  ];
-
   xdg = {
     enable = true;
   };

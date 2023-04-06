@@ -5,8 +5,22 @@
     ./hardware-configuration.nix
     ./selfhosted.nix
     ./backup.nix
+    ../../users/tom/nixos-user.nix
     inputs.vscode-server.nixosModule
+    inputs.home-manager.nixosModule
   ];
+
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {
+      inherit inputs;
+    };
+    users.tom = {
+      imports = [ ../../users/tom/remote.nix ../../users/tom/email.nix ];
+    };
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
