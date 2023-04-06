@@ -1,7 +1,8 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, currentSystem, ... }:
 {
   imports = [
     inputs.nixos-vscode-server.nixosModules.home-manager.nixos-vscode-server
+    inputs.hyprland.homeManagerModules.default
   ];
 
   xdg = {
@@ -11,25 +12,48 @@
   home.sessionVariables = {
     TERMINAL = "kitty";
     EDITOR = "nvim";
+
+    
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_SESSION_DESKTOP = "Hyprland";
+
+    QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+    QT_QPA_PLATFORM = "wayland;xcb";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = 1;
+
+    _JAVA_AWT_WM_NONREPARENTING = 1;
+    SDL_VIDEODRIVER = "wayland";
+    GDK_BACKEND = "wayland,x11";
+    GTK_USE_PORTAL = 1;
   };
 
   home.packages = [
     pkgs.zathura
     pkgs._1password
-    pkgs.i3status-rust
     pkgs.firefox
-    pkgs.pavucontrol
+    pkgs.polkit-kde-agent
+    pkgs.wayvnc
+    pkgs.qt5.qtwayland
   ];
 
-  xsession.enable = true;
-
-  xsession.windowManager.i3 = {
-    package = pkgs.i3-gaps;
+  wayland.windowManager.hyprland = {
     enable = true;
-    config = null;
-    extraConfig = builtins.readFile ./files/i3;
+    systemdIntegration = true;
+    recommendedEnvironment = true;
+    extraConfig = builtins.readFile ./files/hyprland.conf;
+#    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   };
-  xdg.configFile."i3status-rust/config-top.toml".text = builtins.readFile ./files/i3status-rust/config-top.toml;
+
+  programs.waybar = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.waybar-hyprland;
+    style = ./files/waybar.css;
+    systemd = {
+      enable = true;
+    };
+  };
+  xdg.configFile."waybar/config".text = builtins.readFile ./files/waybar.conf;
 
   programs.fzf = {
     enable = true;
@@ -45,6 +69,7 @@
 
   programs.rofi = {
     enable = true;
+    package = pkgs.rofi-wayland;
   };
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./files/rofi/config.rasi;
   xdg.configFile."rofi/themes/nord.rasi".text = builtins.readFile ./files/rofi/themes/nord.rasi;
@@ -75,8 +100,6 @@
   services.clipmenu = {
     enable = true;
   };
-
-  xresources.extraConfig = builtins.readFile ./files/Xresources;
 
   programs.vscode = {
     enable = true;

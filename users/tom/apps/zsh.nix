@@ -44,6 +44,7 @@
     enable = true;
     settings = {
       memory_usage.disabled = true;
+      gcloud.disabled = true;
     };
   };
 

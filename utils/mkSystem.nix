@@ -8,13 +8,13 @@ nixpkgs.lib.nixosSystem {
     inherit inputs;
     currentSystem = config.system;
     sshPubKey = config.sshPubKey;
+    hostname = config.hostname;
   };
 
   modules = [
     ../systems/common.nix
     ../systems/${config.hostname}/configuration.nix
     inputs.home-manager.nixosModule
-    inputs.agenix.nixosModule
     ({
       home-manager = {
         useGlobalPkgs = true;
@@ -22,10 +22,13 @@ nixpkgs.lib.nixosSystem {
         extraSpecialArgs = {
           inherit inputs;
         };
+        #users = builtins.mapAttrs
+        #  (name: value: {
+        #    imports = [ value.home-manager ];
+        #  })
+        # config.users;
         users = builtins.mapAttrs
-          (name: value: {
-            imports = [ value.home-manager ];
-          })
+          (name: value: value.home-manager)
           config.users;
       };
     })

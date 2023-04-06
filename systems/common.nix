@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hostname, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -8,6 +8,7 @@
   system.stateVersion = "22.05";
 
   boot.kernelPackages = pkgs.linuxPackages_latest; 
+  networking.hostName = hostname;
 
   hardware.opengl = {
     enable = true;
@@ -30,6 +31,14 @@
     git
     fira-code
     nnn
+  ];
+
+  environment.variables.NIXOS_OZONE_WL = "1";
+
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-emoji
+    fira-code
   ];
 
   nix = {
