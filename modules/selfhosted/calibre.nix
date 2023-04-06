@@ -28,7 +28,7 @@ in
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.calibre = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "8080" "8081" ];
       volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.libraryDir}:/books" ];

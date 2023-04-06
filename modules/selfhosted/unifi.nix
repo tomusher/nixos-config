@@ -21,7 +21,7 @@ rec {
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.unifi = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "3478:3478/udp" "10001:10001/udp" "8080:8080" "8081:8081" "8443:8443" "8843:8843" "8880:8880" "6789:6789" ];
       volumes = [ "${toString cfg.configDir}:/config" ];

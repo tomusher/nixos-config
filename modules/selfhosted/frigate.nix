@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "ghcr.io/blakeblackshear/frigate:0.12.0-beta5";
+        default = "ghcr.io/blakeblackshear/frigate:0.12.0-beta10";
       };
     configDir = mkOption { type = types.path; };
     mediaDir = mkOption { type = types.path; };

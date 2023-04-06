@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
     ./selfhosted.nix
     ./backup.nix
+    inputs.vscode-server.nixosModule
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -20,12 +21,16 @@
     keyMap = "uk";
   };
 
+  programs.zsh.enable = true;
+
   environment.systemPackages = with pkgs; [
     podman
   ];
 
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
+
+  services.vscode-server.enable = true;
 
   fileSystems."/mnt/disk1" = {
     device = "192.168.0.104:/srv/nfs/disk1";

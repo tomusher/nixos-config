@@ -7,8 +7,8 @@
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-vscode-server = {
-      url = github:MatthewCash/nixos-vscode-server;
+    vscode-server = {
+      url = github:msteen/nixos-vscode-server;
       inputs.nixpkgs.follows = "nixpkgs";
     };
     agenix = {
@@ -32,7 +32,7 @@
         users = {
           tom = {
             nixos = ./users/tom/user.nix;
-            home-manager = ./users/tom/remote.nix;
+            home-manager = [ ./users/tom/remote.nix ./users/tom/email.nix ];
           };
         };
       };
@@ -45,7 +45,7 @@
         users = {
           tom = {
             nixos = ./users/tom/user.nix;
-            home-manager = ./users/tom/guest-vm.nix;
+            home-manager = [ ./users/tom/guest-vm.nix ];
           };
         };
       };

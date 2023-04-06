@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "localhost/fava";
+        default = "localhost/moneytools";
       };
     configDir = mkOption { type = types.path; };
     labels = mkOption
@@ -29,8 +29,11 @@ in
     virtualisation.oci-containers.containers.fava = {
       autoStart = true;
       image = cfg.image;
-      ports = [ "8000" "8001" ];
+      ports = [ "8000" "8001:8001" "8002" ];
       volumes = [ "${toString cfg.configDir}:/bean" ];
+      environment = {
+        LEDGER_FILENAME = "/bean/ledger.beancount";
+      };
       extraOptions = [
         "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
@@ -39,7 +42,12 @@ in
           appName = "fava";
           host = cfg.traefikHost;
           port = 8000;
-        };
+        } ++ [
+        "-l=traefik.http.routers.fava.service=fava"
+        "-l=traefik.http.routers.fava-summary.rule=Host(`fava-summary.home.tomusher.com`)"
+        "-l=traefik.http.routers.fava-summary.service=fava-summary"
+        "-l=traefik.http.services.fava-summary.loadbalancer.server.port=8001"
+        ];
     };
   };
 }

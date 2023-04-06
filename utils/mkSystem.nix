@@ -14,7 +14,6 @@ nixpkgs.lib.nixosSystem {
     ../systems/common.nix
     ../systems/${config.hostname}/configuration.nix
     inputs.home-manager.nixosModule
-    inputs.agenix.nixosModule
     ({
       home-manager = {
         useGlobalPkgs = true;
@@ -24,7 +23,7 @@ nixpkgs.lib.nixosSystem {
         };
         users = builtins.mapAttrs
           (name: value: {
-            imports = [ value.home-manager ];
+            imports = value.home-manager;
           })
           config.users;
       };

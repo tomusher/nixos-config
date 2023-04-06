@@ -27,7 +27,7 @@ in
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.silverbullet = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "3000" ];
       volumes = [ "${toString cfg.dataDir}:/space" ];
