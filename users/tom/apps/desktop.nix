@@ -15,7 +15,6 @@
 
   home.packages = [
     pkgs.zathura
-    pkgs._1password
     pkgs.i3status-rust
     pkgs.firefox
     pkgs.pavucontrol

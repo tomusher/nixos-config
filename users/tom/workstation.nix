@@ -15,7 +15,5 @@
     pkgs.slack
     pkgs.texlive.combined.scheme-basic
     pkgs.pavucontrol
-    pkgs._1password
-    pkgs._1password-gui
   ];
 }

@@ -61,5 +61,10 @@
   services.pipewire.enable = true;
   services.pipewire.pulse.enable = true;
   services.pipewire.wireplumber.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
+  programs._1password.enable = true;
+  programs._1password-gui.enable = true;
+  programs._1password-gui.polkitPolicyOwners = ["tom"];
 }
 

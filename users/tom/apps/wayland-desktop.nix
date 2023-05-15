@@ -30,12 +30,13 @@
 
   home.packages = [
     pkgs.zathura
-    pkgs._1password
     pkgs.firefox
-    pkgs.polkit-kde-agent
+    pkgs.polkit_gnome
     pkgs.wayvnc
     pkgs.qt5.qtwayland
   ];
+
+  xdg.dataFile."bin/polkit-gnome".source = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
 
   wayland.windowManager.hyprland = {
     enable = true;
