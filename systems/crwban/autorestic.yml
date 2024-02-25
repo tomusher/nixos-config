@@ -24,7 +24,7 @@ locations:
         exclude-file: /etc/autorestic/backup_excludes
 
   books:
-    from: /mnt/big/eBooks
+    from: /mnt/morfil/media/eBooks
     to: backblaze
     forget: prune
     cron: '30 * * * *'

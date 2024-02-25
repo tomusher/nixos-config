@@ -13,7 +13,7 @@ in
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/nicolargo/glances";
+        default = "docker.io/nicolargo/glances:latest-full";
       };
     labels = mkOption
       {
@@ -32,7 +32,10 @@ in
       environment = {
         GLANCES_OPT = "-w -t 15";
       };
+      volumes = [ "/var/run/docker.sock:/var/run/docker.sock:ro" ];
       extraOptions = [
+        "--privileged=true"
+        "--pid=host"
         "--network=host"
         "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])

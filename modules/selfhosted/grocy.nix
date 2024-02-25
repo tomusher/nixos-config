@@ -27,8 +27,8 @@ in
 
 
   config = mkIf cfg.enable rec {
-    virtualisation.oci-containers.containers.frigate = {
-      autoStart = true;
+    virtualisation.oci-containers.containers.grocy = {
+      autoStart = false;
       image = cfg.image;
       ports = [ "80" "3306" ];
       volumes = [ "${toString cfg.configDir}:/config/" ];

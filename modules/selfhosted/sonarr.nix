@@ -21,16 +21,21 @@ rec {
         type = types.listOf types.str;
         default = [ ];
       };
+    environment = mkOption
+      {
+        type = types.attrs;
+        default = {};
+      };
     traefikHost = mkOption { type = types.str; };
   };
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.sonarr = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "8989" ];
       volumes = [ "${toString cfg.configDir}:/config" ] ++ cfg.mounts;
-      environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
+      environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; } // cfg.environment;
       extraOptions = [
         "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])

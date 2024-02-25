@@ -16,7 +16,11 @@ in
         default = "lscr.io/linuxserver/calibre";
       };
     configDir = mkOption { type = types.path; };
-    libraryDir = mkOption { type = types.path; };
+    mounts = mkOption
+      {
+        type = types.listOf types.str;
+        default = [ ];
+      };
     traefikHost = mkOption { type = types.str; };
     labels = mkOption
       {
@@ -31,7 +35,7 @@ in
       autoStart = false;
       image = cfg.image;
       ports = [ "8080" "8081" ];
-      volumes = [ "${toString cfg.configDir}:/config" "${toString cfg.libraryDir}:/books" ];
+      volumes = [ "${toString cfg.configDir}:/config" ] ++ cfg.mounts;
       environment = { TZ = "Europe/London"; PUID = "1000"; PGID = "1000"; };
       extraOptions = [
         "-l=io.containers.autoupdate=registry"

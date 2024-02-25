@@ -12,6 +12,7 @@ rec {
     isyncConfig = mkOption { type = types.path; };
     notmuchConfig = mkOption { type = types.path; };
     alotConfig = mkOption { type = types.path; };
+    neomuttConfig = mkOption { type = types.path; };
     googleOauthClientId = mkOption { type = types.str; };
     googleOauthClientSecret = mkOption { type = types.str; };
   };
@@ -21,12 +22,14 @@ rec {
     xdg.configFile."mbsync/mbsyncrc".source = cfg.isyncConfig;
     xdg.configFile."notmuch/config".source = cfg.notmuchConfig;
     xdg.configFile."alot/config".source = cfg.alotConfig;
+    xdg.configFile."neomutt/neomuttrc".source = cfg.neomuttConfig;
     xdg.configFile."oauth2token/google/config.json".source = pkgs.substituteAll {
         src = ./oauth2token/config.json;
         oauth_client_id = cfg.googleOauthClientId;
         oauth_client_secret = cfg.googleOauthClientSecret;
     };
     xdg.configFile."oauth2token/google/scopes.json".text = builtins.readFile ./oauth2token/scopes.json;
+    xdg.configFile.".mailcap".text = "text/html;  w3m -dump -o document_charset=%{charset} '%s'; nametemplate=%s.html; copiousoutput";
 
     home.sessionVariables."NOTMUCH_CONFIG" = "${hmConfig.xdg.configHome}/notmuch/config";
 

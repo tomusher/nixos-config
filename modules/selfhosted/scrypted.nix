@@ -2,20 +2,21 @@
 
 with lib;
 let
-  cfg = config.selfhosted.silverbullet;
+  cfg = config.selfhosted.scrypted;
   backend = config.virtualisation.oci-containers.backend;
   utils = import ./utils.nix;
 in
 {
-  options.selfhosted.silverbullet = {
+  options.selfhosted.scrypted = {
     enable = mkOption { type = types.bool; default = false; };
     network = mkOption { type = types.str; default = ""; };
     image = mkOption
       {
         type = types.str;
-        default = "docker.io/zefhemel/silverbullet";
+        default = "docker.io/koush/scrypted";
       };
-    dataDir = mkOption { type = types.path; };
+    configDir = mkOption { type = types.path; };
+    nvrDir = mkOption { type = types.path; };
     traefikHost = mkOption { type = types.str; };
     labels = mkOption
       {
@@ -26,19 +27,22 @@ in
 
 
   config = mkIf cfg.enable rec {
-    virtualisation.oci-containers.containers.silverbullet = {
-      autoStart = false;
+    virtualisation.oci-containers.containers.scrypted = {
+      autoStart = true;
       image = cfg.image;
-      ports = [ "3000" ];
-      volumes = [ "${toString cfg.dataDir}:/space" ];
+      ports = [ "11080" "33325:33325" ];
+      volumes = [ "${toString cfg.configDir}:/server/volume" "${toString cfg.nvrDir}:/nvr" ];
       extraOptions = [
+        "--privileged=true"
+        "--device=/dev/bus/usb:/dev/bus/usb"
+        "--device=/dev/dri/renderD128"
         "-l=io.containers.autoupdate=registry"
       ] ++ (lib.optionals (cfg.network != "") [ "--network=${cfg.network}" ])
       ++ utils.traefikLabels
         {
-          appName = "silverbullet";
+          appName = "scrypted";
           host = cfg.traefikHost;
-          port = 3000;
+          port = 11080;
         };
     };
   };

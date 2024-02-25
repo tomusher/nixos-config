@@ -31,7 +31,7 @@ rec {
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.bazarr = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "6767" ];
       volumes = [ "${toString cfg.configDir}:/config" ] ++ cfg.mounts;

@@ -54,10 +54,6 @@ in {
     enable = true;
     configDir = /srv/config/homeassistant;
   };
-  selfhosted.roomassistant = {
-    enable = true;
-    configDir = /srv/config/roomassistant;
-  };
   selfhosted.appdaemon = {
     enable = true;
     configDir = /srv/config/appdaemon;
@@ -89,13 +85,15 @@ in {
   selfhosted.calibre = {
     enable = true;
     configDir = /srv/config/calibre;
-    libraryDir = /mnt/big/eBooks;
     traefikHost = "calibre.home.tomusher.com";
+    mounts = [
+      "/mnt/morfil/media:/data"
+    ];
   };
   selfhosted.calibre-web = {
     enable = true;
     configDir = /srv/config/calibre-web;
-    libraryDir = /mnt/big/eBooks;
+    libraryDir = /mnt/morfil/media/eBooks;
     traefikHost = "calibre-web.home.tomusher.com";
   };
   selfhosted.changedetection = {
@@ -106,9 +104,10 @@ in {
   selfhosted.sabnzbd = {
     enable = true;
     configDir = /srv/config/sabnzbd;
-    downloadsDir = /mnt/big/downloads;
-    incompleteDownloadsDir = /mnt/big/incomplete-downloads;
     traefikHost = "sabnzbd.home.tomusher.com";
+    mounts = [
+      "/mnt/morfil/media:/data"
+    ];
   };
   selfhosted.bazarr = {
     enable = true;
@@ -120,9 +119,7 @@ in {
     configDir = /srv/config/sonarr;
     traefikHost = "sonarr.home.tomusher.com";
     mounts = [
-      "/mnt/disk1/Videos/Episodic:/tv"
-      "/mnt/big/Videos/Episodic:/tv2"
-      "/mnt/big/downloads:/downloads"
+      "/mnt/morfil/media:/data"
     ];
   };
   selfhosted.radarr = {
@@ -130,9 +127,7 @@ in {
     configDir = /srv/config/radarr;
     traefikHost = "radarr.home.tomusher.com";
     mounts = [
-      "/mnt/big/downloads:/downloads"
-      "/mnt/disk2/Videos/Films:/movies"
-      "/mnt/big/Videos/Films:/movies2"
+      "/mnt/morfil/media:/data"
     ];
   };
   selfhosted.prowlarr = {
@@ -148,9 +143,15 @@ in {
   };
   selfhosted.paperless = {
     enable = true;
-    configDir = /srv/config/paperless;
-    dataDir = /srv/data/paperless;
     traefikHost = "paperless.home.tomusher.com";
+    mounts = [
+      "/mnt/morfil/files:/data"
+    ];
+    environment = {
+      PAPERLESS_REDIS = "redis://redis:6379";
+      PAPERLESS_DATA_DIR = "/data/documents/paperless-data";
+      PAPERLESS_MEDIA_ROOT = "/data/documents";
+    };
   };
   selfhosted.glances = {
     enable = true;
@@ -166,23 +167,25 @@ in {
     configDir = /srv/config/money;
     traefikHost = "fava.home.tomusher.com";
   };
-  selfhosted.silverbullet = {
-    enable = true;
-    dataDir = /srv/data/silverbullet;
-    traefikHost = "notes.home.tomusher.com";
-  };
   selfhosted.plex = {
     enable = true;
     traefikHost = "plex.home.tomusher.com";
     configDir = /srv/config/plex;
     extraMounts = [
-      "/mnt/disk1/Videos/Episodic:/data/tvshows"
-      "/mnt/disk2/Videos/Episodic:/data/tvshows2"
-      "/mnt/disk1/Videos/Films:/data/movies"
-      "/mnt/disk2/Videos/Films:/data/movies2"
-      "/mnt/big/Videos/Episodic:/data/tvshows3"
-      "/mnt/big/Videos/Films:/data/movies3"
-      "/mnt/big/music:/data/music"
+      "/mnt/morfil/media:/data"
     ];
+  };
+  selfhosted.tailscale = {
+    enable = true;
+    configDir = /srv/config/tailscale;
+    environment = {
+      TS_AUTHKEY = secrets.tailscale_auth_key;
+      TS_EXTRA_ARGS = "--advertise-routes=192.168.0.0/24 --advertise-exit-node";
+    };
+  };
+  selfhosted.homepage = {
+    enable = true;
+    configDir = /srv/config/homepage;
+    traefikHost = "home.tomusher.com";
   };
 }

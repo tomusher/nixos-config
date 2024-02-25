@@ -6,7 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     git
-    python39
+    python310
     wmctrl
     nil
     nixpkgs-fmt
@@ -24,7 +24,7 @@
 
   environment.variables.NIXOS_OZONE_WL = "1";
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-emoji
     fira-code

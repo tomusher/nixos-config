@@ -16,7 +16,7 @@ in pkgs.stdenv.mkDerivation rec {
       '';
     };
 
-  nativeBuildInputs = with pkgs; [ makeWrapper which isync-oauth2 alot notmuch oauth2token cyrus-sasl-xoauth2 ];
+  nativeBuildInputs = with pkgs; [ makeWrapper which isync-oauth2 alot neomutt notmuch w3m oauth2token cyrus-sasl-xoauth2 ];
 
   installPhase = ''
     mkdir -p $out/bin/
@@ -27,6 +27,8 @@ in pkgs.stdenv.mkDerivation rec {
     makeWrapper $(which notmuch) $out/bin/notmuch
     makeWrapper $(which oauth2create) $out/bin/oauth2create
     makeWrapper $(which oauth2get) $out/bin/oauth2get
+    makeWrapper $(which w3m) $out/bin/w3m
+    makeWrapper $(which neomutt) $out/bin/neomutt
   '';
 
 }

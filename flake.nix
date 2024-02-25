@@ -30,13 +30,13 @@
     {
       channelsConfig.allowUnfree = true;
 
-      nixosConfigurations.afanc = mkSystem {
+      nixosConfigurations.afanc = mkSystem.nixos {
         inherit inputs nixpkgs;
         hostname = "afanc";
         system = "x86_64-linux";
       };
 
-      nixosConfigurations.crwban = mkSystem {
+      nixosConfigurations.crwban = mkSystem.nixos {
         inherit inputs nixpkgs;
         hostname = "crwban";
         system = "x86_64-linux";

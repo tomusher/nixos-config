@@ -1,8 +1,11 @@
-{ lib
+{ pkgs
+, lib
 , python3Packages
 }:
 
-python3Packages.buildPythonApplication rec {
+let
+  google-auth-oauthlib = pkgs.callPackage ./google-auth-oauthlib.nix { };
+in python3Packages.buildPythonApplication rec {
   pname = "oauth2token";
   version = "0.0.3";
   format = "setuptools";

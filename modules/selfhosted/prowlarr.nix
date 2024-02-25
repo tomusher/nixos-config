@@ -21,7 +21,7 @@ rec {
 
   config = mkIf cfg.enable rec {
     virtualisation.oci-containers.containers.prowlarr = {
-      autoStart = true;
+      autoStart = false;
       image = cfg.image;
       ports = [ "9696" ];
       volumes = [ "${toString cfg.configDir}:/config" ];
