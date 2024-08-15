@@ -13,7 +13,7 @@
   ];
 
   home.sessionVariables = {
-    TERMINAL = "kitty";
+    TERMINAL = "wezterm";
     EDITOR = "nvim";
   };
 
@@ -23,6 +23,11 @@
     theme = "Nord";
   };
   xdg.configFile."kitty/open-actions.conf".text = builtins.readFile ./files/kitty/open-actions.conf;
+
+  home.file."/.config/wezterm" = {
+    source = ./files/wezterm;
+    recursive = true;
+  };
 
   programs.zoxide = {
     enable = true;
@@ -41,7 +46,6 @@
       n = "nuke";
     };
   };
-
 
   programs.git = {
     enable = true;

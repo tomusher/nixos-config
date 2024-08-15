@@ -3,9 +3,7 @@
 {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
     enableCompletion = true;
-    syntaxHighlighting.enable = true;
     autocd = true;
 
     defaultKeymap = "emacs";
@@ -15,6 +13,9 @@
       size = 100000;
       path = "${config.xdg.dataHome}/zsh/zsh_history";
     };
+
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
 
     initExtra = ''
       autoload edit-command-line
@@ -28,7 +29,6 @@
       setopt hist_verify
       setopt share_history
 
-      path+=('/home/tom/.config/Code/User/globalStorage/ms-vscode-remote.remote-containers/cli-bin')
       export PATH
 
       if test -n "$KITTY_INSTALLATION_DIR"; then
@@ -37,6 +37,10 @@
       kitty-integration
       unfunction kitty-integration
       fi
+      function set_win_title(){
+        echo -ne "\033]0; $PWD \007"
+      }
+      precmd_functions+=(set_win_title)
     '';
   };
 

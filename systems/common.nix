@@ -6,7 +6,9 @@
 
   environment.systemPackages = with pkgs; [
     git
-    python310
+    python311
+    python311.pkgs.pip
+    python311.pkgs.pipx
     wmctrl
     nil
     nixpkgs-fmt
@@ -20,9 +22,8 @@
     git
     fira-code
     nnn
+    lazygit
   ];
-
-  environment.variables.NIXOS_OZONE_WL = "1";
 
   fonts.packages = with pkgs; [
     noto-fonts

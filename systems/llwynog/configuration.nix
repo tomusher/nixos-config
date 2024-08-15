@@ -26,14 +26,14 @@
 
   homebrew = {
     enable = true;
+    brews = [
+      "mise"
+    ];
     casks = [
       "1password"
-      "brave-browser"
-      "cutbox"
+      "vivaldi"
       "discord"
-      "docker"
       "firefox"
-      "notion"
       "microsoft-teams"
       "obs"
       "parsec"
@@ -43,6 +43,18 @@
       "tableplus"
       "zoom"
       "vmware-fusion-tech-preview"
+      "wezterm"
+      "aerospace"
+      "betterdisplay"
+      "bettertouchtool"
+      "orbstack"
+      "obsidian"
+      "raycast"
+      "readdle-spark"
+      "scroll-reverser"
+      "syncthing"
+      "visual-studio-code"
+      "todoist"
     ];
   };
 
